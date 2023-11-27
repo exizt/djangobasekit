@@ -1,4 +1,11 @@
 # django
+## 설치
+```shell
+python -m venv venv
+pip install django
+```
+
+
 ## 버전 확인
 ```shell
 python -m django --version
