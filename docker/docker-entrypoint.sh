@@ -24,7 +24,7 @@ if [ -f /srv/app/.env ]; then
     echo "run django server"
     python manage.py runserver 0.0.0.0:80
 else
-    echo "[entrypoint.sh] .env not found"
+    echo "[entrypoint.sh] .env file not found"
     exit 1
 fi
 

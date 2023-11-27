@@ -19,7 +19,7 @@ services:
       - ./scripts:/srv/scripts
       - ./djangobasekit/docker/docker-entrypoint.sh:/srv/docker-entrypoint.sh
       # - webapp_data:/app/web
-    restart: always
+    # restart: always
     # command: python manage.py runserver 0.0.0.0:8000
     entrypoint: /bin/bash /srv/docker-entrypoint.sh
   db:

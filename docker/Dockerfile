@@ -7,17 +7,22 @@ FROM python:3-alpine AS Builder
 # RUN apk add gcc
 
 # https://github.com/ellerbrock/docker-alpine/blob/master/django/Dockerfile
-ENV PY_PACKAGES="\
-  django \
-  mysqlclient \
-  django-environ \
-  markdown \
-  mdx-breakless-lists \
-"
+# ENV PY_PACKAGES="\
+#   django \
+#   mysqlclient \
+#   django-environ \
+#   markdown \
+#   mdx-breakless-lists \
+# "
 
 RUN apk update
 RUN apk add --no-cache musl-dev mariadb-dev gcc
-RUN pip install $PY_PACKAGES --user
+
+COPY requirements/base.txt /srv/requirements/base.txt
+COPY requirements/dev.txt /srv/requirements/requirements.txt
+
+# RUN pip install $PY_PACKAGES --user
+RUN pip install -r /srv/requirements/requirements.txt --user
 
 
 # 본격적인 이미지

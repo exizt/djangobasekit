@@ -1,5 +1,6 @@
 # 프로덕션 환경의 Dockerfile
 # 실제로는 사용하지 않고, 테스트용.
+# gunicorn 방식
 
 # 파이썬 패키지를 빌드하기 위한 이미지.
 # gcc의 용량이 크기 때문에, 별도로 분리해서 결과물만 복사이동하는 방식.
@@ -8,18 +9,22 @@ FROM python:3-alpine AS Builder
 # RUN apk add gcc
 
 # https://github.com/ellerbrock/docker-alpine/blob/master/django/Dockerfile
-ENV PY_PACKAGES="\
-  django \
-  mysqlclient \
-  django-environ \
-  markdown \
-  mdx-breakless-lists \
-"
+# ENV PY_PACKAGES="\
+#   django \
+#   mysqlclient \
+#   django-environ \
+#   markdown \
+#   mdx-breakless-lists \
+# "
 
 RUN apk update
 RUN apk add --no-cache musl-dev mariadb-dev gcc
-RUN pip install $PY_PACKAGES --user
 
+COPY requirements/base.txt /srv/requirements/base.txt
+COPY requirements/prod.txt /srv/requirements/requirements.txt
+
+# RUN pip install $PY_PACKAGES --user
+RUN pip install -r /srv/requirements/requirements.txt --user
 
 # 본격적인 이미지
 FROM python:3-alpine
@@ -27,6 +32,7 @@ FROM python:3-alpine
 # alpine은 bash가 없다고 하니, 설치를 해야 함.
 RUN apk add --no-cache bash
 RUN apk add --no-cache mariadb-connector-c
+# RUN apk add --no-cache py3-gunicorn
 
 # python의 설치할 pip 패키지를 가져옴
 COPY --from=builder /root/.local /root/.local
