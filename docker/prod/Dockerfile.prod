@@ -38,6 +38,9 @@ RUN apk add --no-cache mariadb-connector-c
 COPY --from=builder /root/.local /root/.local
 ENV PATH=/root/.local/bin:$PATH
 
+# gunicorn 로그를 위한 디렉터리
+RUN mkdir /var/log/gunicorn
+
 WORKDIR /srv/app
 
 ENTRYPOINT ["tail", "-f", "/dev/null"]

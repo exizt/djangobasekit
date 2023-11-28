@@ -4,23 +4,36 @@
 # nginx, gunicorn의 조합이 될 예정
 version: "3.9"
 services: 
+  nginx:
+    image: nginx:alpine
+    ports:
+      - ${APP_PORT_EXTERNAL}:80
+    volumes:
+      - ./app:/srv/app
+      - ./djangobasekit/docker/prod/nginx.conf:/etc/nginx/nginx.conf
+      - static:/srv/static
   app:
     build:
       context: .
       dockerfile: ${DOCKERFILE_APP}
       network: host # alpine build 중 temporary error 방지.
-    ports:
-      - ${APP_PORT_EXTERNAL}:80
+    #ports:
+    #  - 8000:8000
+    expose:
+      - "8000"
     # depends_on:
     #  db:
     #    condition: service_completed_successfully
     volumes:
       - ./app:/srv/app
       - ./scripts:/srv/scripts
-      - ./djangobasekit/docker/docker-entrypoint.sh:/srv/docker-entrypoint.sh
+      - ./djangobasekit/docker/prod/docker-entrypoint.prod.sh:/srv/docker-entrypoint.sh
+      - ./djangobasekit/docker/prod/gunicorn.conf.py:/srv/gunicorn.conf.py
+      - static:/srv/static
       # - webapp_data:/app/web
     # restart: always
     # command: python manage.py runserver 0.0.0.0:8000
+    # command: gunicorn config.wsgi -b 0.0.0.0:8000
     entrypoint: /bin/bash /srv/docker-entrypoint.sh
   db:
     # mariadb LTS 버전 10.6 (2026-07), 10.11 (2028-02)
@@ -38,3 +51,4 @@ services:
     restart: always
 volumes:
   db:
+  static:
