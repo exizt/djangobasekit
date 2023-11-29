@@ -1,7 +1,7 @@
 # gunicorn.conf.py
 # Non logging stuff
 bind = "0.0.0.0:80"
-workers = 3
+workers = 2
 # Access log - records incoming HTTP requests
 accesslog = "/var/log/gunicorn/gunicorn.access.log"
 # Error log - records Gunicorn server goings-on
@@ -10,3 +10,6 @@ errorlog = "/var/log/gunicorn/gunicorn.error.log"
 capture_output = True
 # How verbose the Gunicorn error logs should be 
 loglevel = "info"
+# 성능 관련
+max_requests = 50
+max_requests_jitter = 25
