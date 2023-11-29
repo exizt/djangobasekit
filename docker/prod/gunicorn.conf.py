@@ -13,3 +13,5 @@ loglevel = "info"
 # 성능 관련
 max_requests = 50
 max_requests_jitter = 25
+
+preload_app = True
