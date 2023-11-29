@@ -38,4 +38,10 @@ ENV PATH=/root/.local/bin:$PATH
 
 WORKDIR /srv/app
 
+## 파이썬 개발 관련 환경 변수
+# 바이트코드 만들지 않음
+ENV PYTHONDONTWRITEBYTECODE 1
+# 로그가 버퍼링 없이 출력
+ENV PYTHONUNBUFFERED 1
+
 ENTRYPOINT ["tail", "-f", "/dev/null"]
