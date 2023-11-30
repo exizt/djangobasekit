@@ -15,7 +15,7 @@ python -m django --version
 ## 프로젝트 생성하기
 일반적
 ```shell
-django-admin startproject mysite
+django-admin startproject site
 ```
 
 설정을 고려한 생성
