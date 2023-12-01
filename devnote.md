@@ -15,7 +15,7 @@ python -m django --version
 ## 프로젝트 생성하기
 일반적
 ```shell
-django-admin startproject site
+django-admin startproject (프로젝트명)
 ```
 
 설정을 고려한 생성
@@ -69,3 +69,8 @@ python manage.py sqlmigrate blog 0001
 2. 데이터베이스에서 테이블 등을 삭제한다. (안 해도 되나? 확인 필요)
 3. migrate 명령을 수행한다.
 
+
+## 수퍼유저 생성
+```shell
+python manage.py createsuperuser
+```
