@@ -32,6 +32,6 @@ services:
       - ${DB_PORT_EXTERNAL}:3306
     volumes:
       - db:/var/lib/mysql
-    restart: always
+    # restart: always
 volumes:
   db:
